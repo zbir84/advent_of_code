@@ -3,6 +3,7 @@ def read_data(input_path: str) -> str:
         input_instructions = inputs.read()
     return input_instructions
 
+
 def puzzle(input_instructions: str, part: int):
     if part == 1:
         result = mul(input_instructions)
@@ -10,7 +11,7 @@ def puzzle(input_instructions: str, part: int):
         dos = input_instructions.split("do()")
         result = 0
         for do in dos:
-            dont = do.split("don\'t()")
+            dont = do.split("don't()")
             # only apply on first split:
             first_occurence = dont[0].find("mul(")
             result += mul(dont[0][first_occurence:])
