@@ -25,4 +25,4 @@ def input_file(tmp_path):
 
 def test_puzzle_day_06(input_file):
     map = read_data(input_file)
-    assert puzzle(map) == 41
+    assert puzzle(map) == (41, 6)

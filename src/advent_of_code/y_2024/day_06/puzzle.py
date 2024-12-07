@@ -36,11 +36,16 @@ def move_and_count(map, cp, cd):
     }
     edge = False
     visited_map = []
+    visited_dir = []
+    loop_obstruction = []
     while not edge:
+        obs_flag = check_loop(cp, cd, visited_map, visited_dir, map)
         visited_map.append(cp)
+        visited_dir.append(f"{cp[0]}_{cp[1]}_{cd[0]}_{cd[1]}")
         edge, cp, cd, map = move(cp, cd, map, position_map)
-
-    return len(set(visited_map))
+        if obs_flag:
+            loop_obstruction.append(cp)
+    return len(set(visited_map)), len(set(loop_obstruction))
 
 
 def move(cp, cd, map, position_map):
@@ -58,8 +63,19 @@ def move(cp, cd, map, position_map):
         return move(cp, cd, map, position_map)
 
 
+def check_loop(cp, cd, visited_map, visited_dir, map) -> bool:
+    if cp in visited_map:
+        # calculate
+        temp = (cd[1] * -1, cd[0])
+        next_move = (cp[0] + temp[0], cp[1] + temp[1])
+        if f"{next_move[0]}_{next_move[1]}_{temp[0]}_{temp[1]}" in visited_dir:
+            print("We've got a loop")
+            return True
+    return False
+
+
 if __name__ == "__main__":
     map = read_data("src/advent_of_code/y_2024/day_06/input.txt")
-    pt_1 = puzzle(map)
+    pt_1, pt_2 = puzzle(map)
     print(f"Day 6, part 1: {pt_1}")
-    # print(f"Day 6, part 2: {pt_2}")
+    print(f"Day 6, part 2: {pt_2}")
