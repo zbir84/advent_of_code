@@ -1,10 +1,13 @@
+import copy
+
+
 def read_data(input_path: str) -> str:
     with open(input_path, "r") as inputs:
         map = inputs.readlines()
     return [[char for char in row.replace("\n", "")] for row in map]
 
 
-def puzzle(map: list[str]) -> int:
+def puzzle(map: list[list[str]]) -> tuple[int, int]:
     pos, dir = get_initial_position_and_direction(map)
     count = move_and_count(
         map,
@@ -27,7 +30,9 @@ def get_initial_position_and_direction(map: list[str]) -> tuple[tuple[int, int],
                 return (j, i), position_map[char]
 
 
-def move_and_count(map, cp, cd):
+def move_and_count(
+    start_map: list[list[str]], start_pos: tuple[int, int], start_dir: tuple[int, int]
+) -> tuple[int, int]:
     position_map = {
         "-1_0": "<",
         "0_-1": "^",
@@ -36,40 +41,57 @@ def move_and_count(map, cp, cd):
     }
     edge = False
     visited_map = []
-    visited_dir = []
     loop_obstruction = []
+    cp = start_pos
+    cd = start_dir
+    map = copy.deepcopy(start_map)
     while not edge:
-        obs_flag = check_loop(cp, cd, visited_map, visited_dir, map)
         visited_map.append(cp)
-        visited_dir.append(f"{cp[0]}_{cp[1]}_{cd[0]}_{cd[1]}")
         edge, cp, cd, map = move(cp, cd, map, position_map)
-        if obs_flag:
-            loop_obstruction.append(cp)
+    for pos in visited_map:
+        if pos != start_pos and check_loop(start_pos, start_dir, pos, start_map, position_map):
+            loop_obstruction.append(pos)
     return len(set(visited_map)), len(set(loop_obstruction))
 
 
-def move(cp, cd, map, position_map):
+def move(
+    cp: tuple[int, int], cd: tuple[int, int], map: list[list[str]], position_map: dict[str, str]
+) -> tuple[bool, tuple[int, int], tuple[int, int], list[list[str]]]:
     next_move = (cp[0] + cd[0], cp[1] + cd[1])
-    if next_move[0] < 0 or next_move[0] == len(map[0]) or next_move[1] < 0 or next_move[1] == len(map):
+    if not map_bounds(next_move[0], next_move[1], len(map[0]), len(map)):
         return (True, cp, cd, map)
     elif map[next_move[1]][next_move[0]] == ".":
+        # move forward
         map[cp[1]][cp[0]] = "."
         cp = next_move
-        map[cp[1]][cp[0]] = position_map[f"{cd[0]}_{cd[1]}"]
-        return (False, cp, cd, map)
     else:
+        # rotate
         temp = (cd[1] * -1, cd[0])
         cd = temp
-        return move(cp, cd, map, position_map)
+    map[cp[1]][cp[0]] = position_map[f"{cd[0]}_{cd[1]}"]
+    return (False, cp, cd, map)
 
 
-def check_loop(cp, cd, visited_map, visited_dir, map) -> bool:
-    if cp in visited_map:
-        # calculate
-        temp = (cd[1] * -1, cd[0])
-        next_move = (cp[0] + temp[0], cp[1] + temp[1])
-        if f"{next_move[0]}_{next_move[1]}_{temp[0]}_{temp[1]}" in visited_dir:
-            print("We've got a loop")
+def map_bounds(x: int, y: int, max_x: int, max_y) -> bool:
+    return x >= 0 and x < max_x and y >= 0 and y < max_y
+
+
+def check_loop(
+    cp: tuple[int, int],
+    cd: tuple[int, int],
+    obstruction: tuple[int, int],
+    map: list[list[str]],
+    position_map: dict[str, str],
+) -> bool:
+    temp_map = copy.deepcopy(map)
+    temp_map[obstruction[1]][obstruction[0]] = "0"
+    visited = set()
+    edge = False
+    while not edge:
+        visited.add(f"{cp[0]}_{cp[1]}_{cd[0]}_{cd[1]}")
+        edge, cp, cd, temp_map = move(cp, cd, temp_map, position_map)
+        if not edge and f"{cp[0]}_{cp[1]}_{cd[0]}_{cd[1]}" in visited:
+            # we're back in the patrol loop
             return True
     return False
 
