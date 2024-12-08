@@ -1,5 +1,5 @@
 import pytest
-from src.advent_of_code.y_2024.day_06.puzzle import puzzle, read_data
+from src.advent_of_code.y_2024.day_07.puzzle import puzzle, read_data
 
 
 @pytest.fixture
@@ -24,4 +24,4 @@ def input_file(tmp_path):
 
 def test_puzzle_day_07(input_file):
     data = read_data(input_file)
-    assert puzzle(data) == 3749
+    assert puzzle(data) == (3749, 11387)
