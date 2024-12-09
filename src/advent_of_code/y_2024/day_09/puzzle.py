@@ -4,7 +4,7 @@ import time
 
 def read_data(input_path: str) -> list[list[str]]:
     with open(input_path, "r") as inputs:
-        input = inputs.read()
+        input = inputs.read().strip()
     decoded_input = []
     for i, char in enumerate(input):
         if i % 2 == 0:
@@ -49,8 +49,8 @@ def count_checksum(ordered_list: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    data = read_data("src/advent_of_code/y_2024/day_09/input.txt")
     start_time = time.time()
+    data = read_data("src/advent_of_code/y_2024/day_09/input.txt")
     pt_1 = puzzle_pt_1(copy.deepcopy(data))
     print(f"Day 9, part 1 result: {pt_1}")
     print(f"Day 9, part 1 duration: {time.time() - start_time} s")
