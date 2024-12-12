@@ -43,6 +43,6 @@ def test_puzzle_day_11_1_2(input_file_2, blinks, expected):
     assert puzzle_pt_1(data, blinks) == expected
 
 
-def test_puzzle_day_11_2(input_file_1):
-    data = read_data(input_file_1)
-    assert puzzle_pt_2(data) == 81
+def test_puzzle_day_11_2(input_file_2):
+    data = read_data(input_file_2)
+    assert puzzle_pt_2(data, 6) == 22
