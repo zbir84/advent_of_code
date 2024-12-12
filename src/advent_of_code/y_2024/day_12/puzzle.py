@@ -31,7 +31,7 @@ def puzzle_pt_1(data: list[list[str]]) -> int:
     return total_price
 
 
-def puzzle_pt_2(data: list[int]) -> int:
+def puzzle_pt_2(data: list[list[str]]) -> int:
     DIRECTIONS = {(-1, 0), (0, 1), (0, -1), (1, 0)}
     map = {}
     borders = {}
