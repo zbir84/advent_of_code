@@ -25,11 +25,12 @@ p=9,5 v=-3,-3""",
     return p
 
 
-def test_puzzle_day_14_1_1(input_file_1):
+def test_puzzle_day_14_1(input_file_1):
     data = read_data(input_file_1)
     assert puzzle_pt_1(data, (11, 7), 100) == 12
 
 
-def test_puzzle_day_14_2_1(input_file_1):
-    data = read_data(input_file_1)
-    assert puzzle_pt_2(data) == 0
+# this is an actual solution :P
+def test_puzzle_day_14_2():
+    data = read_data("src/advent_of_code/y_2024/day_14/input.txt")
+    assert puzzle_pt_2(data, (101, 103)) == 8159
