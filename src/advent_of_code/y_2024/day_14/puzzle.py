@@ -60,6 +60,7 @@ def puzzle_pt_2(data: list[dict[str, list[int]]], size: tuple[int, int]) -> int:
                 robot["pos"][1] = new_pos[1] - size[1]
             counts_x[robot["pos"][0]] += 1
             counts_y[robot["pos"][1]] += 1
+        # check if we have at least a 0.25 number of robots in a straight line in both axis
         if max(counts_x) > size[0] / 4 and max(counts_y) > size[1] / 4:
             print(i + 1)
             print_map(data, size)
