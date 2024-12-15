@@ -20,7 +20,7 @@ def puzzle_pt_2(data: dict) -> int:
 
 
 if __name__ == "__main__":
-    data = read_data("src/advent_of_code/y_2024/day_16/input.txt")
+    data = read_data("src/advent_of_code/y_2024/day_xx/input.txt")
     start_time = time.time()
     pt_1 = puzzle_pt_1(copy.deepcopy(data))
     pt_1_duration = time.time() - start_time
