@@ -8,17 +8,68 @@ def input_file_1(tmp_path):
     d.mkdir()
     p = d / "input_test_1.txt"
     p.write_text(
-        """""",
+        """########
+#..O.O.#
+##@.O..#
+#...O..#
+#.#.O..#
+#...O..#
+#......#
+########
+
+<^^>>>vv<v>>v<<""",
         encoding="utf-8",
     )
     return p
 
 
-def test_puzzle_day_15_1(input_file_1):
+@pytest.fixture
+def input_file_2(tmp_path):
+    d = tmp_path / "sub"
+    d.mkdir()
+    p = d / "input_test_1.txt"
+    p.write_text(
+        """##########
+#..O..O.O#
+#......O.#
+#.OO..O.O#
+#..O@..O.#
+#O#..O...#
+#O..O..O.#
+#.OO.O.OO#
+#....O...#
+##########
+
+<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
+vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
+><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
+<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
+^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
+^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
+>^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
+<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
+^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
+v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^""",
+        encoding="utf-8",
+    )
+    return p
+
+
+def test_puzzle_day_15_1_1(input_file_1):
     data = read_data(input_file_1)
-    assert puzzle_pt_1(data) == 0
+    assert puzzle_pt_1(data) == 2028
 
 
-def test_puzzle_day_15_2(input_file_1):
+def test_puzzle_day_15_1_2(input_file_2):
+    data = read_data(input_file_2)
+    assert puzzle_pt_1(data) == 10092
+
+
+def test_puzzle_day_15_2_1(input_file_1):
+    data = read_data(input_file_1)
+    assert puzzle_pt_2(data) == 0
+
+
+def test_puzzle_day_15_2_2(input_file_1):
     data = read_data(input_file_1)
     assert puzzle_pt_2(data) == 0
