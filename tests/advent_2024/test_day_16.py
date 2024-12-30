@@ -8,7 +8,21 @@ def input_file_1(tmp_path):
     d.mkdir()
     p = d / "input_test_1.txt"
     p.write_text(
-        """""",
+        """###############
+#.......#....E#
+#.#.###.#.###.#
+#.....#.#...#.#
+#.###.#####.#.#
+#.#.#.......#.#
+#.#.#####.###.#
+#...........#.#
+###.#.#####.#.#
+#...#.....#.#.#
+#.#.#.###.#.#.#
+#.....#...#.#.#
+#.###.#.#.#.#.#
+#S..#.....#...#
+###############""",
         encoding="utf-8",
     )
     return p
@@ -16,7 +30,7 @@ def input_file_1(tmp_path):
 
 def test_puzzle_day_16_1_1(input_file_1):
     data = read_data(input_file_1)
-    assert puzzle_pt_1(data) == 0
+    assert puzzle_pt_1(data) == 7036
 
 
 def test_puzzle_day_16_2_1(input_file_1):
